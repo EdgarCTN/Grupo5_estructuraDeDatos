@@ -17,6 +17,8 @@ public class Actividad implements Serializable {
     private Date fechaLimite;
     private int tiempoEstimado;
     private int prioridad;
+    
+    
 
     public Actividad(String nombre, String descripcion, Date fechaLimite, int tiempoEstimado, int prioridad) {
         this.nombre = nombre;

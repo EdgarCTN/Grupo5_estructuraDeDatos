@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.gestor_actividades;
 
 import java.io.Serializable;
@@ -9,10 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author PC
- */
 public class ArbolAVL implements Serializable {
     private NodoAVL raiz;
 
@@ -227,4 +219,9 @@ public class ArbolAVL implements Serializable {
         if (nodo == null) return 0;
         return nodo.actividad.getTiempoEstimado() + calcularTiempoTotal(nodo.izquierda) + calcularTiempoTotal(nodo.derecha);
     }
-}
+
+    public NodoAVL getRaiz() {
+        return raiz;
+
+}}
+

@@ -55,6 +55,7 @@ public class pantalla2 extends javax.swing.JPanel {
         etiquetaImagen = new javax.swing.JLabel();
         etiqueta1 = new javax.swing.JLabel();
         etiqueta2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -70,7 +71,7 @@ public class pantalla2 extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Actividad", "Descripcion", "Tiempo estimado", "Prioridad", "Eliminar", "Modificar"
+                "Actividad", "Fecha limite", "Tiempo estimado", "Prioridad", "Eliminar", "Modificar"
             }
         ));
         tablaDatos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -87,6 +88,13 @@ public class pantalla2 extends javax.swing.JPanel {
         etiqueta1.setText("Se ordena en base a :  ");
 
         etiqueta2.setText("Fecha, prioridad, tiempo estimado y si todo lo anterior choca por decisión del usuario");
+
+        jButton1.setText("Ver Arbol");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -109,6 +117,10 @@ public class pantalla2 extends javax.swing.JPanel {
                             .addComponent(etiqueta1)
                             .addComponent(etiqueta2))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(61, 61, 61))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,7 +138,9 @@ public class pantalla2 extends javax.swing.JPanel {
                         .addComponent(etiqueta1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(etiqueta2)))
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(34, 34, 34))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -213,6 +227,10 @@ public class pantalla2 extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_tablaDatosMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
     private void iniciarEstilos(){
         //Coleres de textos
         texto1.putClientProperty( "FlatLaf.styleClass", "h1" );
@@ -255,6 +273,7 @@ public class pantalla2 extends javax.swing.JPanel {
     private javax.swing.JLabel etiqueta1;
     private javax.swing.JLabel etiqueta2;
     private javax.swing.JLabel etiquetaImagen;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaDatos;
