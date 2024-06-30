@@ -158,7 +158,7 @@
         </Container>
         <Component class="javax.swing.JLabel" name="texto1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Lista de actividades - General"/>
+            <Property name="text" type="java.lang.String" value="Lista de actividades - Micro Tareas"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="etiquetaImagen">

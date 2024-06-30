@@ -81,7 +81,7 @@ public class pantalla3 extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tablaDatos);
 
-        texto1.setText("Lista de actividades - General");
+        texto1.setText("Lista de actividades - Micro Tareas");
 
         etiquetaImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/notas.png"))); // NOI18N
 
