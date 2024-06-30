@@ -223,5 +223,46 @@ public class ArbolAVL implements Serializable {
     public NodoAVL getRaiz() {
         return raiz;
 
-}}
+    }
+    public void agregarSubactividad(String nombreActividadPadre, Actividad subactividad) {
+    raiz = agregarSubactividadRec(raiz, nombreActividadPadre, subactividad);
+    }
+
+    private NodoAVL agregarSubactividadRec(NodoAVL nodo, String nombreActividadPadre, Actividad subactividad) {
+        if (nodo == null) {
+            return null;
+        }
+
+        if (nombreActividadPadre.equals(nodo.actividad.getNombre())) {
+            nodo.actividad.addSubActividad(subactividad);
+            return nodo;
+        }
+
+        if (nombreActividadPadre.compareTo(nodo.actividad.getNombre()) < 0) {
+            nodo.izquierda = agregarSubactividadRec(nodo.izquierda, nombreActividadPadre, subactividad);
+        } else {
+            nodo.derecha = agregarSubactividadRec(nodo.derecha, nombreActividadPadre, subactividad);
+        }
+
+        nodo.altura = 1 + Math.max(altura(nodo.izquierda), altura(nodo.derecha));
+
+        int balance = obtenerBalance(nodo);
+
+        if (balance > 1) {
+            if (obtenerBalance(nodo.izquierda) < 0) {
+                nodo.izquierda = rotacionIzquierda(nodo.izquierda);
+            }
+            return rotacionDerecha(nodo);
+        }
+
+        if (balance < -1) {
+            if (obtenerBalance(nodo.derecha) > 0) {
+                nodo.derecha = rotacionDerecha(nodo.derecha);
+            }
+            return rotacionIzquierda(nodo);
+        }
+
+        return nodo;
+    }
+}
 

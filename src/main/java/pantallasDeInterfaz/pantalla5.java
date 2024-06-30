@@ -11,7 +11,9 @@ import com.mycompany.gestor_actividades.NodoAVL;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.GroupLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -74,13 +76,14 @@ public class pantalla5 extends javax.swing.JPanel {
         if (nodo != null) {
             // Dibujar el nodo actual
             g2d.drawOval(x - 15, y - 15, 30, 30);
-            g2d.drawString(nodo.actividad.getNombre(), x - 10, y);
+            g2d.drawString(String.valueOf(nodo.actividad.getPrioridad())
+                    , x - 10, y);
 
             // Dibujar la conexión con el hijo izquierdo si existe
             if (nodo.izquierda != null) {
                 int childX = x - xOffset;
                 int childY = y + yOffset;
-                g2d.drawLine(x, y, childX, childY);
+                g2d.drawLine(x, y, childX, childY); 
                 drawAVLTree(g2d, nodo.izquierda, childX, childY, xOffset / 2, yOffset);
             }
 
@@ -93,6 +96,7 @@ public class pantalla5 extends javax.swing.JPanel {
             }
         }
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

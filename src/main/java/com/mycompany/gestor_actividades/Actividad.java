@@ -1,15 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.gestor_actividades;
 
-/**
- *
- * @author PC
- */
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Actividad implements Serializable {
     private String nombre;
@@ -17,8 +11,7 @@ public class Actividad implements Serializable {
     private Date fechaLimite;
     private int tiempoEstimado;
     private int prioridad;
-    
-    
+    private List<Actividad> subActividades;
 
     public Actividad(String nombre, String descripcion, Date fechaLimite, int tiempoEstimado, int prioridad) {
         this.nombre = nombre;
@@ -26,6 +19,7 @@ public class Actividad implements Serializable {
         this.fechaLimite = fechaLimite;
         this.tiempoEstimado = tiempoEstimado;
         this.prioridad = prioridad;
+        this.subActividades = new ArrayList<>();
     }
 
     public String getNombre() {
@@ -68,12 +62,26 @@ public class Actividad implements Serializable {
         this.prioridad = prioridad;
     }
 
+    public List<Actividad> getSubActividades() {
+        return subActividades;
+    }
+
+    public void addSubActividad(Actividad subActividad) {
+        this.subActividades.add(subActividad);
+    }
+
     @Override
     public String toString() {
-        return "\n 1) Nombre=" + nombre +
-               "\n 2) Descripcion=" + descripcion +
-               "\n 3) Fecha Limite=" + fechaLimite +
-               "\n 4) TiempoEstimado=" + tiempoEstimado +
-               "\n 5) Prioridad=" + prioridad;
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n 1) Nombre=").append(nombre);
+        sb.append("\n 2) Descripcion=").append(descripcion);
+        sb.append("\n 3) Fecha Limite=").append(fechaLimite);
+        sb.append("\n 4) Tiempo Estimado=").append(tiempoEstimado);
+        sb.append("\n 5) Prioridad=").append(prioridad);
+        sb.append("\n 6) SubActividades=").append(subActividades.size()).append("\n");
+        for (Actividad subActividad : subActividades) {
+            sb.append("    ").append(subActividad.toString()).append("\n");
+        }
+        return sb.toString();
     }
 }
