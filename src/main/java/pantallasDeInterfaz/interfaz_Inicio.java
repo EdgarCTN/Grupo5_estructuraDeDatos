@@ -307,7 +307,7 @@ public class interfaz_Inicio extends javax.swing.JFrame {
     }
 
     private void boton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton4ActionPerformed
-        pantalla4 p1= new pantalla4();
+        pantalla4 p1= new pantalla4(usuario);
         p1.setSize(800,445);
         p1.setLocation(0,0);
         contenido.removeAll();

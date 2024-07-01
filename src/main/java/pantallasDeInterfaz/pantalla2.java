@@ -8,9 +8,12 @@ import com.mycompany.gestor_actividades.Actividad;
 import java.awt.Color;
 import java.awt.Component;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import javax.swing.JButton;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -33,8 +36,11 @@ public class pantalla2 extends javax.swing.JPanel {
         initComponents();
         iniciarEstilos();
         cargarDatos();
-        actualizarTablaDatos();
+        llenarComboBoxFechas();
+        llenarComboBoxPrioridad();// Llenar el combo box con las fechas de las actividades
+        actualizarTablaDatos(null,null); // Cargar todas las actividades al inicio
         configurarTabla();
+        configurarBuscador();
 
 
     }
@@ -55,6 +61,9 @@ public class pantalla2 extends javax.swing.JPanel {
         etiquetaImagen = new javax.swing.JLabel();
         etiqueta1 = new javax.swing.JLabel();
         etiqueta2 = new javax.swing.JLabel();
+        fechas = new javax.swing.JComboBox<>();
+        Prioridad = new javax.swing.JComboBox<>();
+        Buscador = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -88,6 +97,32 @@ public class pantalla2 extends javax.swing.JPanel {
 
         etiqueta2.setText("Fecha, prioridad, tiempo estimado y si todo lo anterior choca por decisión del usuario");
 
+        fechas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fechas" }));
+        fechas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechasActionPerformed(evt);
+            }
+        });
+
+        Prioridad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prioridad" }));
+        Prioridad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PrioridadActionPerformed(evt);
+            }
+        });
+
+        Buscador.setText("Buscar");
+        Buscador.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BuscadorMouseClicked(evt);
+            }
+        });
+        Buscador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscadorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -99,23 +134,35 @@ public class pantalla2 extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(texto1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addComponent(etiquetaImagen)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(etiqueta1)
-                            .addComponent(etiqueta2))))
+                            .addComponent(etiqueta2)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(fechas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(Prioridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(Buscador, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(texto1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(12, 12, 12)
                 .addComponent(texto1)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fechas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Prioridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Buscador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -126,7 +173,7 @@ public class pantalla2 extends javax.swing.JPanel {
                         .addComponent(etiqueta1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(etiqueta2)))
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -140,33 +187,88 @@ public class pantalla2 extends javax.swing.JPanel {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void PrioridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrioridadActionPerformed
+        String fechaSeleccionada = (String) fechas.getSelectedItem();
+        String prioridadSeleccionada = (String) Prioridad.getSelectedItem();
+        actualizarTablaDatos(fechaSeleccionada, prioridadSeleccionada);
+    }//GEN-LAST:event_PrioridadActionPerformed
+
+    private void fechasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechasActionPerformed
+        String fechaSeleccionada = (String) fechas.getSelectedItem();
+        String prioridadSeleccionada = (String) Prioridad.getSelectedItem();
+        actualizarTablaDatos(fechaSeleccionada, prioridadSeleccionada);
+    }//GEN-LAST:event_fechasActionPerformed
+
+    private void tablaDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaDatosMouseClicked
+        int columnaBotonEliminar = 5;
+        int columnaBotonModificar = 6;
+
+        int fila = tablaDatos.rowAtPoint(evt.getPoint());
+        if (fila != -1) {
+            String nombreActividad = (String) tablaDatos.getValueAt(fila, 0);
+            if (tablaDatos.columnAtPoint(evt.getPoint()) == columnaBotonEliminar) {
+                boolean eliminado = usuario.getArbolActividades().eliminar(nombreActividad);
+                if (eliminado) {
+                    usuario.guardarArbolActividades();  // Guarda el árbol después de eliminar
+                    JOptionPane.showMessageDialog(null, "Actividad eliminada exitosamente.");
+                    actualizarTablaDatos(null,null);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al eliminar la actividad.");
+                }
+            } else if (tablaDatos.columnAtPoint(evt.getPoint()) == columnaBotonModificar) {
+                String nuevaDescripcion = JOptionPane.showInputDialog("Ingrese la nueva descripción para " + nombreActividad);
+                if (nuevaDescripcion != null && !nuevaDescripcion.trim().isEmpty()) {
+                    usuario.getArbolActividades().modificar(nombreActividad, nuevaDescripcion);
+                    usuario.guardarArbolActividades();  // Guarda el árbol después de modificar
+                    actualizarTablaDatos(null,null);
+                }
+            }
+        }
+    }//GEN-LAST:event_tablaDatosMouseClicked
+
+    private void BuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscadorActionPerformed
+        Buscador.setText(""); 
+    }//GEN-LAST:event_BuscadorActionPerformed
+
+    private void BuscadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BuscadorMouseClicked
+        Buscador.setText("");
+    }//GEN-LAST:event_BuscadorMouseClicked
     private void cargarDatos() {
         usuario.cargarArbolActividades();
     }
 
 
-    private void actualizarTablaDatos() {
-        List<Actividad> actividades = usuario.getArbolActividades().obtenerActividades();
-        DefaultTableModel model = (DefaultTableModel) tablaDatos.getModel();
-        model.setRowCount(0);
+    private void actualizarTablaDatos(String fechaFiltro, String prioridadFiltro) {
+    List<Actividad> actividades = usuario.getArbolActividades().obtenerActividades();
+    DefaultTableModel model = (DefaultTableModel) tablaDatos.getModel();
+    model.setRowCount(0);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", new Locale("es", "ES")); // Formato de fecha en español
+    SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", new Locale("es", "ES")); // Formato de fecha en español
 
-        for (Actividad actividad : actividades) {
-            String fechaFormateada = sdf.format(actividad.getFechaLimite());
+    for (Actividad actividad : actividades) {
+        String fechaFormateada = sdf.format(actividad.getFechaLimite());
+        String prioridad = String.valueOf(actividad.getPrioridad());
+
+        // Verificar si coincide con el filtro de fecha y/o prioridad
+        boolean coincideFecha = fechaFiltro == null || fechaFiltro.equals(fechaFormateada)||fechaFiltro.equals("Fechas");
+        boolean coincidePrioridad = prioridadFiltro == null || prioridadFiltro.equals(prioridad)||prioridadFiltro.equals("Prioridad");
+
+        if (coincideFecha && coincidePrioridad) {
             Object[] rowData = {
-                    actividad.getNombre(),
+                actividad.getNombre(),
                 actividad.getDescripcion(),
-                    fechaFormateada ,
-                    actividad.getTiempoEstimado() +" minutos",
-                    actividad.getPrioridad(),
-                    "Eliminar",
-                    "Modificar"
+                fechaFormateada,
+                actividad.getTiempoEstimado() + " minutos",
+                prioridad,
+                "Eliminar",
+                "Modificar"
             };
             model.addRow(rowData);
         }
-
     }
+}
+
 
 
     private void configurarTabla() {
@@ -186,34 +288,6 @@ public class pantalla2 extends javax.swing.JPanel {
 
 
 
-
-    private void tablaDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaDatosMouseClicked
-        int columnaBotonEliminar = 5;
-        int columnaBotonModificar = 6;
-
-        int fila = tablaDatos.rowAtPoint(evt.getPoint());
-        if (fila != -1) {
-            String nombreActividad = (String) tablaDatos.getValueAt(fila, 0);
-            if (tablaDatos.columnAtPoint(evt.getPoint()) == columnaBotonEliminar) {
-                boolean eliminado = usuario.getArbolActividades().eliminar(nombreActividad);
-                if (eliminado) {
-                    usuario.guardarArbolActividades();  // Guarda el árbol después de eliminar
-                    JOptionPane.showMessageDialog(null, "Actividad eliminada exitosamente.");
-                    actualizarTablaDatos();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Error al eliminar la actividad.");
-                }
-            } else if (tablaDatos.columnAtPoint(evt.getPoint()) == columnaBotonModificar) {
-                String nuevaDescripcion = JOptionPane.showInputDialog("Ingrese la nueva descripción para " + nombreActividad);
-                if (nuevaDescripcion != null && !nuevaDescripcion.trim().isEmpty()) {
-                    usuario.getArbolActividades().modificar(nombreActividad, nuevaDescripcion);
-                    usuario.guardarArbolActividades();  // Guarda el árbol después de modificar
-                    actualizarTablaDatos();
-                }
-            }
-        }
-
-    }//GEN-LAST:event_tablaDatosMouseClicked
     private void iniciarEstilos(){
         //Coleres de textos
         texto1.putClientProperty( "FlatLaf.styleClass", "h1" );
@@ -248,14 +322,114 @@ public class pantalla2 extends javax.swing.JPanel {
             return this;
         }
     }
+    private void llenarComboBoxFechas() {
+        List<Actividad> actividades = usuario.getArbolActividades().obtenerActividades();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", new Locale("es", "ES")); // Formato de fecha en español
+        fechas.removeAllItems(); // Limpiar items existentes
+
+        // Añadir el primer ítem con texto "Fechas" y valor null
+        fechas.addItem("Fechas");
+
+        Set<String> fechasUnicas = new HashSet<>(); // Set para almacenar fechas únicas
+
+        for (Actividad actividad : actividades) {
+            String fechaFormateada = sdf.format(actividad.getFechaLimite());
+            fechasUnicas.add(fechaFormateada); // Añadir fecha al set (solo se añaden las fechas únicas)
+        }
+
+        for (String fecha : fechasUnicas) {
+            fechas.addItem(fecha); // Añadir fechas únicas al combo box
+        }
+    }
+    private void llenarComboBoxPrioridad() {
+        List<Actividad> actividades = usuario.getArbolActividades().obtenerActividades();
+        Set<String> prioridadesUnicas = new HashSet<>();
+
+        Prioridad.removeAllItems(); // Limpiar items existentes
+        Prioridad.addItem("Prioridad"); // Añadir "Prioridad" como primer ítem
+
+        for (Actividad actividad : actividades) {
+            String prioridad = String.valueOf(actividad.getPrioridad());
+            prioridadesUnicas.add(prioridad); // Añadir prioridad al set (solo únicas)
+        }
+
+        for (String prioridad : prioridadesUnicas) {
+            Prioridad.addItem(prioridad); // Añadir prioridades únicas al combo box
+        }
+    }
+    private void configurarBuscador() {
+        Buscador.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                actualizarTablaPorBusqueda();
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                actualizarTablaPorBusqueda();
+            }
+
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                actualizarTablaPorBusqueda();
+            }
+        });
+    }
+
+    private void actualizarTablaPorBusqueda() {
+        String busqueda = Buscador.getText().trim(); // Obtener el texto del buscador y quitar espacios en blanco
+        String fechaSeleccionada = (String) fechas.getSelectedItem();
+        String prioridadSeleccionada = (String) Prioridad.getSelectedItem();
+
+        if ("Buscar".equalsIgnoreCase(busqueda)) {
+            busqueda = null;
+        }
+
+        // Actualizar la tabla con el texto del buscador como filtro
+        actualizarTablaDatos(fechaSeleccionada, prioridadSeleccionada, busqueda);
+    }
+
+    private void actualizarTablaDatos(String fechaFiltro, String prioridadFiltro, String busqueda) {
+        List<Actividad> actividades = usuario.getArbolActividades().obtenerActividades();
+        DefaultTableModel model = (DefaultTableModel) tablaDatos.getModel();
+        model.setRowCount(0);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", new Locale("es", "ES")); // Formato de fecha en español
+
+        for (Actividad actividad : actividades) {
+            String fechaFormateada = sdf.format(actividad.getFechaLimite());
+            String prioridad = String.valueOf(actividad.getPrioridad());
+
+            // Verificar si coincide con el filtro de fecha, prioridad y búsqueda
+            boolean coincideFecha = fechaFiltro == null || fechaFiltro.equals(fechaFormateada) || fechaFiltro.equals("Fechas");
+            boolean coincidePrioridad = prioridadFiltro == null || prioridadFiltro.equals(prioridad) || prioridadFiltro.equals("Prioridad");
+            boolean coincideBusqueda = busqueda == null || actividad.getNombre().toLowerCase().contains(busqueda.toLowerCase());
+
+            if (coincideFecha && coincidePrioridad && coincideBusqueda) {
+                Object[] rowData = {
+                    actividad.getNombre(),
+                    actividad.getDescripcion(),
+                    fechaFormateada,
+                    actividad.getTiempoEstimado() + " minutos",
+                    prioridad,
+                    "Eliminar",
+                    "Modificar"
+                };
+                model.addRow(rowData);
+            }
+        }
+    }
 
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Buscador;
+    private javax.swing.JComboBox<String> Prioridad;
     private javax.swing.JLabel etiqueta1;
     private javax.swing.JLabel etiqueta2;
     private javax.swing.JLabel etiquetaImagen;
+    private javax.swing.JComboBox<String> fechas;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaDatos;

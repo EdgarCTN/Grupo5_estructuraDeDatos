@@ -1,7 +1,11 @@
 package com.mycompany.gestor_actividades;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Date;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -47,62 +51,40 @@ public class ArbolAVL implements Serializable {
     }
 
     private NodoAVL insertarRec(NodoAVL nodo, Actividad actividad) {
-        if (nodo == null) {
-            return new NodoAVL(actividad);
-        }
-
-        int comparacionFecha = actividad.getFechaLimite().compareTo(nodo.actividad.getFechaLimite());
-        if (comparacionFecha < 0) {
-            nodo.izquierda = insertarRec(nodo.izquierda, actividad);
-        } else if (comparacionFecha > 0) {
-            nodo.derecha = insertarRec(nodo.derecha, actividad);
-        } else {
-            int comparacionPrioridad = Integer.compare(actividad.getPrioridad(), nodo.actividad.getPrioridad());
-            if (comparacionPrioridad != 0) {
-                nodo = comparacionPrioridad > 0 ? insertarRec(nodo.izquierda, actividad) : insertarRec(nodo.derecha, actividad);
-            } else {
-                int comparacionTiempo = Integer.compare(actividad.getTiempoEstimado(), nodo.actividad.getTiempoEstimado());
-                if (comparacionTiempo != 0) {
-                    nodo = comparacionTiempo > 0 ? insertarRec(nodo.izquierda, actividad) : insertarRec(nodo.derecha, actividad);
-                } else {
-                    String mensaje = "Las actividades son iguales en fecha, prioridad y tiempo estimado:\n"
-                            + "Actividad existente: " + nodo.actividad + "\n"
-                            + "Nueva actividad: " + actividad + "\n"
-                            + "¿Desea insertar la nueva actividad a la izquierda o a la derecha?";
-
-                    Object[] opciones = {"Izquierda", "Derecha"};
-                    int decision = JOptionPane.showOptionDialog(null, mensaje, "Decisión de inserción",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
-
-                    if (decision == 0) {
-                        nodo.izquierda = insertarRec(nodo.izquierda, actividad);
-                    } else {
-                        nodo.derecha = insertarRec(nodo.derecha, actividad);
-                    }
-                }
-            }
-        }
-
-        nodo.altura = 1 + Math.max(altura(nodo.izquierda), altura(nodo.derecha));
-
-        int balance = obtenerBalance(nodo);
-
-        if (balance > 1) {
-            if (obtenerBalance(nodo.izquierda) < 0) {
-                nodo.izquierda = rotacionIzquierda(nodo.izquierda);
-            }
-            return rotacionDerecha(nodo);
-        }
-
-        if (balance < -1) {
-            if (obtenerBalance(nodo.derecha) > 0) {
-                nodo.derecha = rotacionDerecha(nodo.derecha);
-            }
-            return rotacionIzquierda(nodo);
-        }
-
-        return nodo;
+    if (nodo == null) {
+        return new NodoAVL(actividad);
     }
+
+    int comparacionFecha = actividad.getFechaLimite().compareTo(nodo.actividad.getFechaLimite());
+    if (comparacionFecha < 0) {
+        nodo.izquierda = insertarRec(nodo.izquierda, actividad);
+    } else if (comparacionFecha > 0) {
+        nodo.derecha = insertarRec(nodo.derecha, actividad);
+    } else {
+        // Las fechas son iguales, continuar insertando en el subárbol derecho
+        nodo.derecha = insertarRec(nodo.derecha, actividad);
+    }
+
+    nodo.altura = 1 + Math.max(altura(nodo.izquierda), altura(nodo.derecha));
+
+    int balance = obtenerBalance(nodo);
+
+    if (balance > 1) {
+        if (obtenerBalance(nodo.izquierda) < 0) {
+            nodo.izquierda = rotacionIzquierda(nodo.izquierda);
+        }
+        return rotacionDerecha(nodo);
+    }
+
+    if (balance < -1) {
+        if (obtenerBalance(nodo.derecha) > 0) {
+            nodo.derecha = rotacionDerecha(nodo.derecha);
+        }
+        return rotacionIzquierda(nodo);
+    }
+
+    return nodo;
+}
 
     public boolean eliminar(String nombreActividad) {
         if (raiz == null) return false;
@@ -172,7 +154,37 @@ public class ArbolAVL implements Serializable {
             inOrden(nodo.derecha, actividades);
         }
     }
+public List<Actividad> obtenerActividadesRecomendadas() {
+        List<Actividad> actividades = obtenerActividades();
 
+        actividades.sort(new Comparator<Actividad>() {
+            @Override
+            public int compare(Actividad a1, Actividad a2) {
+                Date now = new Date();
+                Date limite10 = a1.getFechaLimite();
+                Date limite20 = a2.getFechaLimite();
+
+                // Comparación por fecha límite (menos de 2 días)
+                long diff1 = (limite10.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+                long diff2 = (limite20.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+
+                if (diff1 <= 2 && diff2 <= 2) {
+                    return limite10.compareTo(limite20);
+                }
+
+                // Comparación por prioridad
+                int prioridadComparison = Integer.compare(a2.getPrioridad(), a1.getPrioridad());
+                if (prioridadComparison != 0) {
+                    return prioridadComparison;
+                }
+
+                // Comparación por tiempo estimado
+                return Integer.compare(a1.getTiempoEstimado(), a2.getTiempoEstimado());
+            }
+        });
+
+        return actividades;
+    }
     public void modificar(String nombreActividad, String nuevaDescripcion) {
         NodoAVL nodo = buscar(raiz, nombreActividad);
         if (nodo != null) {
