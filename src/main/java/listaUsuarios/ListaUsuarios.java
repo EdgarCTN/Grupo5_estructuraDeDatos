@@ -36,43 +36,56 @@ public class ListaUsuarios implements Serializable {
         this.cabeza = null;
     }
 
+    /**
+     * Agrega un usuario a la lista enlazada de usuarios.
+     * @param usuario Usuario a agregar.
+     */
     public void agregarUsuario(Usuario usuario) {
-        NodoUsuario nuevoNodo = new NodoUsuario(usuario);
+        NodoUsuario nuevoNodo = new NodoUsuario(usuario); // Crea un nuevo nodo con el usuario proporcionado
         if (cabeza == null) {
-            cabeza = nuevoNodo;
+            cabeza = nuevoNodo; // Si la lista está vacía, el nuevo nodo se convierte en la cabeza de la lista
         } else {
             NodoUsuario actual = cabeza;
             while (actual.siguiente != null) {
-                actual = actual.siguiente;
+                actual = actual.siguiente; // Recorre la lista hasta el último nodo
             }
-            actual.siguiente = nuevoNodo;
+            actual.siguiente = nuevoNodo; // Agrega el nuevo nodo al final de la lista
         }
     }
 
+    /**
+     * Busca un usuario en la lista por nombre.
+     * @param nombre Nombre del usuario a buscar.
+     * @return El usuario encontrado o null si no se encuentra.
+     */
     public Usuario buscarUsuario(String nombre) {
         NodoUsuario actual = cabeza;
         while (actual != null) {
             if (actual.usuario.getNombreUsuario().equals(nombre)) {
-                return actual.usuario;
+                return actual.usuario; // Devuelve el usuario si se encuentra
             }
-            actual = actual.siguiente;
+            actual = actual.siguiente; // Pasa al siguiente nodo en la lista
         }
-        return null; // Si no se encuentra el usuario
+        return null; // Si no se encuentra el usuario, devuelve null
     }
 
+    /**
+     * Muestra todos los usuarios en la lista y sus actividades.
+     */
     public void mostrarUsuarios() {
         NodoUsuario actual = cabeza;
         while (actual != null) {
-            System.out.println(actual.usuario);
+            System.out.println(actual.usuario); // Imprime la información del usuario actual
             if (actual.usuario.getArbolActividades() != null) {
                 List<Actividad> actividades = actual.usuario.getArbolActividades().obtenerActividades();
                 for (Actividad actividad : actividades) {
-                    System.out.println(actividad);
+                    System.out.println(actividad); // Imprime cada actividad del usuario
                 }
             }
-            actual = actual.siguiente;
+            actual = actual.siguiente; // Pasa al siguiente nodo en la lista
         }
     }
+
 
     public void serializarLista(String filename) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
