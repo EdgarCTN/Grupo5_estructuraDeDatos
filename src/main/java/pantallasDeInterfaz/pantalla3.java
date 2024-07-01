@@ -159,7 +159,7 @@ public class pantalla3 extends javax.swing.JPanel {
             Object[] rowData = {
                     actividad.getNombre(),
                     actividad.getSubActividades().size()+" sub-tareas",
-                    actividad.getTiempoEstimado(),
+                    actividad.getTiempoEstimado() +" minutos",
                     actividad.getPrioridad(),
                     "Crear",
                     
@@ -214,7 +214,7 @@ Actividad actividad = usuario.getArbolActividades().obtenerActividades().get(fil
                 mensaje.append("\nNombre: ").append(subactividad.getNombre());
                 mensaje.append("\nDescripción: ").append(subactividad.getDescripcion());
        //         mensaje.append("\nFecha Límite: ").append(dateFormat.format(subactividad.getFechaLimite()));
-                mensaje.append("\nTiempo Estimado: ").append(subactividad.getTiempoEstimado()).append(" horas");
+                mensaje.append("\nTiempo Estimado: ").append(subactividad.getTiempoEstimado()).append(" minutos");
        //         mensaje.append("\nPrioridad: ").append(subactividad.getPrioridad());
                 mensaje.append("\n--------------------------\n");
             }

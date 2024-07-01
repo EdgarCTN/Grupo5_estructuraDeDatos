@@ -33,8 +33,10 @@ public class crearSubActividad extends javax.swing.JFrame {
         this.usuario=usuario;
         this.fecha=fecha;
         this.priori=priori;
+        
         initComponents();
         iniciarEstilos();
+        etiquetaTitulo.setText("Agregar sub-Actividad de "+nombrePadre);
     }
 
     /**
@@ -75,7 +77,7 @@ public class crearSubActividad extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(205, 205, 205)
+                .addGap(72, 72, 72)
                 .addComponent(etiquetaTitulo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -239,6 +241,7 @@ public class crearSubActividad extends javax.swing.JFrame {
         interfaz_Inicio inicioFrame = new interfaz_Inicio(usuario);
         inicioFrame.setVisible(true);
         this.dispose();
+        
 
     }//GEN-LAST:event_botonRegresarActionPerformed
 

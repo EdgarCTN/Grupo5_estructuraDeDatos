@@ -76,9 +76,8 @@ public class pantalla5 extends javax.swing.JPanel {
         if (nodo != null) {
             // Dibujar el nodo actual
             g2d.drawOval(x - 15, y - 15, 30, 30);
-            g2d.drawString(String.valueOf(nodo.actividad.getPrioridad())
-                    , x - 10, y);
-
+  //          g2d.drawString(String.valueOf(nodo.actividad.getPrioridad()), x - 10, y);
+            g2d.drawString(nodo.actividad.getNombre(), x - 10, y);
             // Dibujar la conexión con el hijo izquierdo si existe
             if (nodo.izquierda != null) {
                 int childX = x - xOffset;

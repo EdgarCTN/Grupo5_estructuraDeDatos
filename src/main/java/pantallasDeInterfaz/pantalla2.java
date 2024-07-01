@@ -158,7 +158,7 @@ public class pantalla2 extends javax.swing.JPanel {
                     actividad.getNombre(),
                 actividad.getDescripcion(),
                     fechaFormateada ,
-                    actividad.getTiempoEstimado() +" días",
+                    actividad.getTiempoEstimado() +" minutos",
                     actividad.getPrioridad(),
                     "Eliminar",
                     "Modificar"
