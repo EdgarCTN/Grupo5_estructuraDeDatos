@@ -20,16 +20,19 @@ import listaUsuarios.Usuario;
  * @author PC
  */
 public class crearSubActividad extends javax.swing.JFrame {
-    
+    private Date fecha;
     private Usuario usuario;
     private String nombrePadre;
+    private int priori;
 
     /**
      * Creates new form crearActividad
      */
-    public crearSubActividad(Usuario usuario,String nombrePadre) {
+    public crearSubActividad(Usuario usuario,String nombrePadre, Date fecha,int priori) {
         this.nombrePadre=nombrePadre;
         this.usuario=usuario;
+        this.fecha=fecha;
+        this.priori=priori;
         initComponents();
         iniciarEstilos();
     }
@@ -49,14 +52,10 @@ public class crearSubActividad extends javax.swing.JFrame {
         etiquetaTitulo = new javax.swing.JLabel();
         etiquetaNombre = new javax.swing.JLabel();
         etiquetaDescripcion = new javax.swing.JLabel();
-        etiquetaFecha = new javax.swing.JLabel();
         etiquetaTiempo = new javax.swing.JLabel();
-        etiquetaPrioridad = new javax.swing.JLabel();
         textoNombre = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         textoDescripcion = new javax.swing.JTextArea();
-        textoPrioridad = new javax.swing.JTextField();
-        textoFecha = new javax.swing.JTextField();
         textoTiempo = new javax.swing.JTextField();
         botonCrearActividad = new javax.swing.JButton();
         botonRegresar = new javax.swing.JButton();
@@ -92,11 +91,7 @@ public class crearSubActividad extends javax.swing.JFrame {
 
         etiquetaDescripcion.setText("2) Descripcion");
 
-        etiquetaFecha.setText("4) Fecha");
-
-        etiquetaTiempo.setText("5) Tiempo estimado");
-
-        etiquetaPrioridad.setText("3) Prioridad");
+        etiquetaTiempo.setText("3) Tiempo estimado");
 
         textoNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,51 +129,40 @@ public class crearSubActividad extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(etiquetaNombre)
-                            .addComponent(etiquetaDescripcion)
-                            .addComponent(etiquetaPrioridad)
-                            .addComponent(etiquetaFecha)
-                            .addComponent(etiquetaTiempo))
+                            .addComponent(etiquetaTiempo)
+                            .addComponent(etiquetaDescripcion))
                         .addGap(31, 31, 31)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(textoNombre)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
-                            .addComponent(textoPrioridad)
-                            .addComponent(textoFecha)
-                            .addComponent(textoTiempo)))
+                            .addComponent(textoTiempo, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addComponent(botonRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(105, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(etiquetaNombre)
+                    .addComponent(textoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(etiquetaNombre)
-                            .addComponent(textoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(8, 8, 8)
                         .addComponent(etiquetaDescripcion)
                         .addGap(62, 62, 62))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(etiquetaPrioridad)
-                    .addComponent(textoPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(etiquetaFecha)
-                    .addComponent(textoFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(etiquetaTiempo)
                     .addComponent(textoTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                .addGap(47, 47, 47)
                 .addComponent(botonCrearActividad)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(botonRegresar)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -203,10 +187,10 @@ public class crearSubActividad extends javax.swing.JFrame {
         etiquetaNombre.setForeground(Color.black);
         etiquetaDescripcion.putClientProperty( "FlatLaf.styleClass", "h3" );
         etiquetaDescripcion.setForeground(Color.black);
-        etiquetaPrioridad.putClientProperty( "FlatLaf.styleClass", "h3" );
-        etiquetaPrioridad.setForeground(Color.black);
-        etiquetaFecha.putClientProperty( "FlatLaf.styleClass", "h3" );
-        etiquetaFecha.setForeground(Color.black);
+ //       etiquetaPrioridad.putClientProperty( "FlatLaf.styleClass", "h3" );
+   //     etiquetaPrioridad.setForeground(Color.black);
+    //    etiquetaFecha.putClientProperty( "FlatLaf.styleClass", "h3" );
+    //    etiquetaFecha.setForeground(Color.black);
         etiquetaTiempo.putClientProperty( "FlatLaf.styleClass", "h3" );
         etiquetaTiempo.setForeground(Color.black);
         //Color de botones
@@ -223,9 +207,9 @@ public class crearSubActividad extends javax.swing.JFrame {
     try {
         String nombre = textoNombre.getText();
         String descripcion = textoDescripcion.getText();
-        Date fechaLimite = new SimpleDateFormat("dd/MM/yyyy").parse(textoFecha.getText());
+        Date fechaLimite = fecha;
         int tiempoEstimado = Integer.parseInt(textoTiempo.getText());
-        int prioridad = Integer.parseInt(textoPrioridad.getText());
+        int prioridad = priori;
 
         Actividad nuevaActividad = new Actividad(nombre, descripcion, fechaLimite, tiempoEstimado, prioridad);
 
@@ -246,8 +230,6 @@ public class crearSubActividad extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
     } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(this, "Formato de tiempo estimado o prioridad incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (java.text.ParseException ex) {
-        Logger.getLogger(crearSubActividad.class.getName()).log(Level.SEVERE, null, ex);
     }
 
 
@@ -302,9 +284,7 @@ public class crearSubActividad extends javax.swing.JFrame {
     private javax.swing.JButton botonCrearActividad;
     private javax.swing.JButton botonRegresar;
     private javax.swing.JLabel etiquetaDescripcion;
-    private javax.swing.JLabel etiquetaFecha;
     private javax.swing.JLabel etiquetaNombre;
-    private javax.swing.JLabel etiquetaPrioridad;
     private javax.swing.JLabel etiquetaTiempo;
     private javax.swing.JLabel etiquetaTitulo;
     private javax.swing.JPanel jPanel1;
@@ -312,9 +292,7 @@ public class crearSubActividad extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextArea textoDescripcion;
-    private javax.swing.JTextField textoFecha;
     private javax.swing.JTextField textoNombre;
-    private javax.swing.JTextField textoPrioridad;
     private javax.swing.JTextField textoTiempo;
     // End of variables declaration//GEN-END:variables
 }

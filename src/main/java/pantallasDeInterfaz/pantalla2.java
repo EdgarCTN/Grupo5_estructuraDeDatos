@@ -70,7 +70,7 @@ public class pantalla2 extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Actividad", "Fecha limite", "Tiempo estimado", "Prioridad", "Eliminar", "Modificar"
+                "Actividad", "Descripción", "Fecha limite", "Tiempo estimado", "Prioridad", "Eliminar", "Modificar"
             }
         ));
         tablaDatos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -156,6 +156,7 @@ public class pantalla2 extends javax.swing.JPanel {
             String fechaFormateada = sdf.format(actividad.getFechaLimite());
             Object[] rowData = {
                     actividad.getNombre(),
+                actividad.getDescripcion(),
                     fechaFormateada ,
                     actividad.getTiempoEstimado() +" días",
                     actividad.getPrioridad(),
@@ -187,8 +188,8 @@ public class pantalla2 extends javax.swing.JPanel {
 
 
     private void tablaDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaDatosMouseClicked
-        int columnaBotonEliminar = 4;
-        int columnaBotonModificar = 5;
+        int columnaBotonEliminar = 5;
+        int columnaBotonModificar = 6;
 
         int fila = tablaDatos.rowAtPoint(evt.getPoint());
         if (fila != -1) {

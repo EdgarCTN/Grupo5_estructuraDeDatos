@@ -64,7 +64,7 @@ public class interfaz_Inicio extends javax.swing.JFrame {
         contenido = new javax.swing.JPanel();
         crearActividad = new javax.swing.JButton();
         botonSalir = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        crearArbol = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1000, 650));
@@ -202,10 +202,10 @@ public class interfaz_Inicio extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("VerArbol");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        crearArbol.setText("VerArbol");
+        crearArbol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                crearArbolActionPerformed(evt);
             }
         });
 
@@ -220,7 +220,7 @@ public class interfaz_Inicio extends javax.swing.JFrame {
                 .addGap(202, 202, 202)
                 .addComponent(titulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(crearArbol)
                 .addGap(27, 27, 27)
                 .addComponent(crearActividad)
                 .addGap(34, 34, 34)
@@ -245,7 +245,7 @@ public class interfaz_Inicio extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(crearActividad)
                             .addComponent(botonSalir)
-                            .addComponent(jButton1))
+                            .addComponent(crearArbol))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(barraVertical, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
@@ -284,6 +284,7 @@ public class interfaz_Inicio extends javax.swing.JFrame {
         boton3.setForeground(Color.black);
         boton4.setForeground(Color.black);
         crearActividad.setForeground(Color.black);
+        crearArbol.setForeground(Color.black);
         botonSalir.setForeground(Color.black);
 
 
@@ -358,7 +359,7 @@ public class interfaz_Inicio extends javax.swing.JFrame {
 
     }//GEN-LAST:event_botonSalirActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void crearArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearArbolActionPerformed
     pantalla5 p1= new pantalla5(usuario);
         p1.setSize(800,445);
         p1.setLocation(0,0);
@@ -366,7 +367,7 @@ public class interfaz_Inicio extends javax.swing.JFrame {
         contenido.add(p1,BorderLayout.CENTER);
         contenido.revalidate();
         contenido.repaint(); 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_crearArbolActionPerformed
 
     /**
      * @param args the command line arguments
@@ -394,7 +395,7 @@ public class interfaz_Inicio extends javax.swing.JFrame {
     private javax.swing.JButton botonSalir;
     private javax.swing.JPanel contenido;
     private javax.swing.JButton crearActividad;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton crearArbol;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel linea;
     private javax.swing.JLabel mensajeFunciones;

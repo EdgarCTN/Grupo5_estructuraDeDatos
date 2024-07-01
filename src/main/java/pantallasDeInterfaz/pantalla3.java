@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import listaUsuarios.Usuario;
 import pantallasDeInterfaz.crearSubActividad;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -25,7 +26,7 @@ import pantallasDeInterfaz.crearSubActividad;
  */
 public class pantalla3 extends javax.swing.JPanel {
     private Usuario usuario;
-
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     /**
      * Creates new form pantallaInicio
      */
@@ -189,17 +190,38 @@ public class pantalla3 extends javax.swing.JPanel {
     private void tablaDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaDatosMouseClicked
 
         int columnaBotonModificar = 4;
-
+        int columnaBotonVer = 1;
         int fila = tablaDatos.rowAtPoint(evt.getPoint());
         if (fila != -1) {
             String nombreActividad = (String) tablaDatos.getValueAt(fila, 0);
             if (tablaDatos.columnAtPoint(evt.getPoint()) == columnaBotonModificar) {
               Actividad actividad = usuario.getArbolActividades().obtenerActividades().get(fila);
-                crearSubActividad crearSubActividadFrame = new crearSubActividad(usuario,actividad.getNombre());
+                crearSubActividad crearSubActividadFrame = new crearSubActividad(usuario,actividad.getNombre(),actividad.getFechaLimite(),actividad.getPrioridad());
                 crearSubActividadFrame.setVisible(true);
                 Component component = (Component) evt.getSource();
                 javax.swing.SwingUtilities.getWindowAncestor(component).dispose();
                 
+            }
+            if(tablaDatos.columnAtPoint(evt.getPoint()) == columnaBotonVer){
+       //         List<Actividad> subactividades =usuario.getArbolActividades().obtenerActividades().get(fila).getSubActividades();
+Actividad actividad = usuario.getArbolActividades().obtenerActividades().get(fila);
+            List<Actividad> subactividades = actividad.getSubActividades();            
+// Construyes el mensaje con las subactividades
+            StringBuilder mensaje = new StringBuilder();
+            mensaje.append("Subactividades de ").append(actividad.getNombre()).append(":\n");
+            
+            for (Actividad subactividad : subactividades) {
+                mensaje.append("\nNombre: ").append(subactividad.getNombre());
+                mensaje.append("\nDescripción: ").append(subactividad.getDescripcion());
+       //         mensaje.append("\nFecha Límite: ").append(dateFormat.format(subactividad.getFechaLimite()));
+                mensaje.append("\nTiempo Estimado: ").append(subactividad.getTiempoEstimado()).append(" horas");
+       //         mensaje.append("\nPrioridad: ").append(subactividad.getPrioridad());
+                mensaje.append("\n--------------------------\n");
+            }
+            
+            // Muestra el mensaje en un JOptionPane
+            JOptionPane.showMessageDialog(null, mensaje.toString(), "Subactividades de " + actividad.getNombre(), JOptionPane.INFORMATION_MESSAGE);
+        
             }
         }
 

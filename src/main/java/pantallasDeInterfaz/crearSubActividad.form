@@ -58,18 +58,14 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="etiquetaNombre" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="etiquetaDescripcion" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="etiquetaPrioridad" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="etiquetaFecha" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="etiquetaTiempo" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="etiquetaDescripcion" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="textoNombre" max="32767" attributes="0"/>
                               <Component id="jScrollPane1" pref="263" max="32767" attributes="0"/>
-                              <Component id="textoPrioridad" max="32767" attributes="0"/>
-                              <Component id="textoFecha" max="32767" attributes="0"/>
-                              <Component id="textoTiempo" max="32767" attributes="0"/>
+                              <Component id="textoTiempo" alignment="1" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="botonRegresar" max="32767" attributes="0"/>
@@ -81,40 +77,31 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
+                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="etiquetaNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="textoNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="etiquetaNombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="textoNombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="8" pref="8" max="-2" attributes="0"/>
                           <Component id="etiquetaDescripcion" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="etiquetaPrioridad" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="textoPrioridad" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="etiquetaFecha" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="textoFecha" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="etiquetaTiempo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="textoTiempo" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                   <Component id="botonCrearActividad" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="botonRegresar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="70" max="32767" attributes="0"/>
+                  <EmptySpace pref="86" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -165,19 +152,9 @@
             <Property name="text" type="java.lang.String" value="2) Descripcion"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="etiquetaFecha">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="4) Fecha"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="etiquetaTiempo">
           <Properties>
-            <Property name="text" type="java.lang.String" value="5) Tiempo estimado"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="etiquetaPrioridad">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="3) Prioridad"/>
+            <Property name="text" type="java.lang.String" value="3) Tiempo estimado"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoNombre">
@@ -200,10 +177,6 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JTextField" name="textoPrioridad">
-        </Component>
-        <Component class="javax.swing.JTextField" name="textoFecha">
-        </Component>
         <Component class="javax.swing.JTextField" name="textoTiempo">
         </Component>
         <Component class="javax.swing.JButton" name="botonCrearActividad">
