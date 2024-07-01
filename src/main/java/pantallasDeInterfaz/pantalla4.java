@@ -227,7 +227,7 @@ public class pantalla4 extends javax.swing.JPanel {
         if (fila != -1) {
             String nombreActividad = (String) tablaDatos.getValueAt(fila, 0);
             if (tablaDatos.columnAtPoint(evt.getPoint()) == columnaBotonDetalles) {
-                Actividad actividad = usuario.getArbolActividades().obtenerActividades().get(fila);
+                Actividad actividad = usuario.getArbolActividades().obtenerActividadesRecomendadas().get(fila);
                 List<Actividad> subactividades = actividad.getSubActividades();            
                 // Construyes el mensaje con las subactividades
                 StringBuilder mensaje = new StringBuilder();
