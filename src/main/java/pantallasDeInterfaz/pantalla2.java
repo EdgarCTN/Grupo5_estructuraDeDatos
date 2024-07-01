@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.TreeSet;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -222,6 +223,8 @@ public class pantalla2 extends javax.swing.JPanel {
                     usuario.getArbolActividades().modificar(nombreActividad, nuevaDescripcion);
                     usuario.guardarArbolActividades();  // Guarda el árbol después de modificar
                     actualizarTablaDatos(null,null);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Error al modificar la actividad.");
                 }
             }
         }
@@ -330,7 +333,7 @@ public class pantalla2 extends javax.swing.JPanel {
         // Añadir el primer ítem con texto "Fechas" y valor null
         fechas.addItem("Fechas");
 
-        Set<String> fechasUnicas = new HashSet<>(); // Set para almacenar fechas únicas
+        Set<String> fechasUnicas = new TreeSet<>(); // Usar TreeSet para mantener las fechas ordenadas automáticamente
 
         for (Actividad actividad : actividades) {
             String fechaFormateada = sdf.format(actividad.getFechaLimite());
@@ -341,6 +344,7 @@ public class pantalla2 extends javax.swing.JPanel {
             fechas.addItem(fecha); // Añadir fechas únicas al combo box
         }
     }
+
     private void llenarComboBoxPrioridad() {
         List<Actividad> actividades = usuario.getArbolActividades().obtenerActividades();
         Set<String> prioridadesUnicas = new HashSet<>();

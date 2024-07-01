@@ -88,50 +88,57 @@ public class ArbolAVL implements Serializable {
 
     public boolean eliminar(String nombreActividad) {
         if (raiz == null) return false;
+        int tamañoInicial = contarActividades();
         raiz = eliminarRec(raiz, nombreActividad);
-        return raiz != null;
+        int tamañoFinal = contarActividades();
+        return tamañoFinal < tamañoInicial;
     }
 
-    private NodoAVL eliminarRec(NodoAVL nodo, String nombreActividad) {
-        if (nodo == null) return null;
+   private NodoAVL eliminarRec(NodoAVL nodo, String nombreActividad) {
+    if (nodo == null) return null;
 
-        int comparacionNombre = nombreActividad.compareTo(nodo.actividad.getNombre());
-        if (comparacionNombre < 0) {
-            nodo.izquierda = eliminarRec(nodo.izquierda, nombreActividad);
-        } else if (comparacionNombre > 0) {
-            nodo.derecha = eliminarRec(nodo.derecha, nombreActividad);
-        } else {
-            if (nodo.izquierda == null || nodo.derecha == null) {
-                nodo = (nodo.izquierda != null) ? nodo.izquierda : nodo.derecha;
-            } else {
-                NodoAVL temp = obtenerMinValorNodo(nodo.derecha);
-                nodo.actividad = temp.actividad;
-                nodo.derecha = eliminarRec(nodo.derecha, temp.actividad.getNombre());
-            }
+    int comparacionNombre = nombreActividad.compareTo(nodo.actividad.getNombre());
+    if (comparacionNombre < 0) {
+        nodo.izquierda = eliminarRec(nodo.izquierda, nombreActividad);
+    } else if (comparacionNombre > 0) {
+        nodo.derecha = eliminarRec(nodo.derecha, nombreActividad);
+    } else {
+        // Caso 1: Nodo a eliminar tiene 0 o 1 hijo
+        if (nodo.izquierda == null) {
+            return nodo.derecha;
+        } else if (nodo.derecha == null) {
+            return nodo.izquierda;
         }
 
-        if (nodo == null) return nodo;
-
-        nodo.altura = Math.max(altura(nodo.izquierda), altura(nodo.derecha)) + 1;
-
-        int balance = obtenerBalance(nodo);
-
-        if (balance > 1) {
-            if (obtenerBalance(nodo.izquierda) < 0) {
-                nodo.izquierda = rotacionIzquierda(nodo.izquierda);
-            }
-            return rotacionDerecha(nodo);
-        }
-
-        if (balance < -1) {
-            if (obtenerBalance(nodo.derecha) > 0) {
-                nodo.derecha = rotacionDerecha(nodo.derecha);
-            }
-            return rotacionIzquierda(nodo);
-        }
-
-        return nodo;
+        // Caso 2: Nodo a eliminar tiene 2 hijos
+        NodoAVL temp = obtenerMinValorNodo(nodo.derecha);
+        nodo.actividad = temp.actividad;
+        nodo.derecha = eliminarRec(nodo.derecha, temp.actividad.getNombre());
     }
+
+    // Actualizar altura y balance del nodo actual
+    nodo.altura = 1 + Math.max(altura(nodo.izquierda), altura(nodo.derecha));
+
+    int balance = obtenerBalance(nodo);
+
+    // Balancear el árbol si es necesario
+    if (balance > 1) {
+        if (obtenerBalance(nodo.izquierda) < 0) {
+            nodo.izquierda = rotacionIzquierda(nodo.izquierda);
+        }
+        return rotacionDerecha(nodo);
+    }
+
+    if (balance < -1) {
+        if (obtenerBalance(nodo.derecha) > 0) {
+            nodo.derecha = rotacionDerecha(nodo.derecha);
+        }
+        return rotacionIzquierda(nodo);
+    }
+
+    return nodo;
+}
+
 
     private NodoAVL obtenerMinValorNodo(NodoAVL nodo) {
         NodoAVL actual = nodo;
@@ -154,37 +161,49 @@ public class ArbolAVL implements Serializable {
             inOrden(nodo.derecha, actividades);
         }
     }
-public List<Actividad> obtenerActividadesRecomendadas() {
-        List<Actividad> actividades = obtenerActividades();
+    public List<Actividad> obtenerActividadesRecomendadas() {
+       List<Actividad> actividades = obtenerActividades();
 
-        actividades.sort(new Comparator<Actividad>() {
-            @Override
-            public int compare(Actividad a1, Actividad a2) {
-                Date now = new Date();
-                Date limite10 = a1.getFechaLimite();
-                Date limite20 = a2.getFechaLimite();
+       actividades.sort(new Comparator<Actividad>() {
+           @Override
+           public int compare(Actividad a1, Actividad a2) {
+               Date now = new Date();
+               Date limite1 = a1.getFechaLimite();
+               Date limite2 = a2.getFechaLimite();
 
-                // Comparación por fecha límite (menos de 2 días)
-                long diff1 = (limite10.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
-                long diff2 = (limite20.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+               // Calcula la diferencia en días entre la fecha límite y ahora
+               long diff1 = daysBetween(now, limite1);
+               long diff2 = daysBetween(now, limite2);
 
-                if (diff1 <= 2 && diff2 <= 2) {
-                    return limite10.compareTo(limite20);
-                }
+               // Prioriza las actividades con menos de 2 días para completarse
+               if (diff1 <= 2 && diff2 > 2) {
+                   return -1; // a1 tiene menos de 2 días, debería estar antes
+               } else if (diff2 <= 2 && diff1 > 2) {
+                   return 1; // a2 tiene menos de 2 días, debería estar antes
+               } else if (diff1 <= 2 && diff2 <= 2) {
+                   // Ambas tienen menos de 2 días, compara por fecha límite
+                   return limite1.compareTo(limite2);
+               }
 
-                // Comparación por prioridad
-                int prioridadComparison = Integer.compare(a2.getPrioridad(), a1.getPrioridad());
-                if (prioridadComparison != 0) {
-                    return prioridadComparison;
-                }
+               // Si ninguna tiene menos de 2 días, compara por prioridad y luego por tiempo estimado
+               int prioridadComparison = Integer.compare(a2.getPrioridad(), a1.getPrioridad());
+               if (prioridadComparison != 0) {
+                   return prioridadComparison;
+               }
+               return Integer.compare(a1.getTiempoEstimado(), a2.getTiempoEstimado());
+           }
 
-                // Comparación por tiempo estimado
-                return Integer.compare(a1.getTiempoEstimado(), a2.getTiempoEstimado());
-            }
-        });
+           // Método auxiliar para calcular la diferencia de días entre dos fechas
+           private long daysBetween(Date d1, Date d2) {
+               long diff = d2.getTime() - d1.getTime();
+               return diff / (1000 * 60 * 60 * 24);
+           }
+       });
 
-        return actividades;
-    }
+       return actividades;
+   }
+
+
     public void modificar(String nombreActividad, String nuevaDescripcion) {
         NodoAVL nodo = buscar(raiz, nombreActividad);
         if (nodo != null) {
