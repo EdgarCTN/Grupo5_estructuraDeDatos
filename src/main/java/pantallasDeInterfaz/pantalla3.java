@@ -334,14 +334,13 @@ private void configurarBuscador() {
             if ( coincideBusqueda) {
                 Object[] rowData = {
                     actividad.getNombre(),
-                    actividad.getDescripcion(),
-                    fechaFormateada,
-                    actividad.getTiempoEstimado() + " minutos",
-                    prioridad,
-                    "Eliminar",
-                    "Modificar"
-                };
-                model.addRow(rowData);
+                    actividad.getSubActividades().size()+" sub-tareas",
+                    actividad.getTiempoEstimado() +" minutos",
+                    actividad.getPrioridad(),
+                    "Crear",
+                    
+            };
+            model.addRow(rowData);
             }
         }
     }
