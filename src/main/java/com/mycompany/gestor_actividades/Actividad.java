@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+// Clase para almacenar las actividades
 public class Actividad implements Serializable {
     private String nombre;
     private String dato;
