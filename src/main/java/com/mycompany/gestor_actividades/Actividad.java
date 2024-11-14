@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Actividad implements Serializable {
     private String nombre;
+    private String dato;
     private String descripcion;
     private Date fechaLimite;
     private int tiempoEstimado;
